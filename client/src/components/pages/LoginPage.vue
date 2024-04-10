@@ -32,7 +32,7 @@ async function handleLogin(loginInfo: ILoginData) {
     await userStore.refreshUserInfo();
     router.push("/home");
   } catch (err: any) {
-    errorMsg.value = err.response.data.message;
+    errorMsg.value = err.response?.data.message;
   }
 }
 </script>

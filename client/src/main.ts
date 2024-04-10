@@ -13,7 +13,7 @@ const routes = [
   {
     path: "/home",
     component: () => import("./components/pages/HomePage.vue"),
-    meta: { requiresAuth: true },
+    meta: { requiresAuth: false },
     children: [
       {
         path: "/setting",

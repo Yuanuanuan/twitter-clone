@@ -48,6 +48,7 @@ export async function getSelfTweets() {
 }
 
 export async function login(loginInfo: ILoginData) {
+  console.log("login");
   const res = await api.post("/login", loginInfo);
   if (!res.data.status) {
     return;
