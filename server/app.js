@@ -1,5 +1,4 @@
 // import multer from "multer";
-const { changeToBase64 } = require("./module");
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();

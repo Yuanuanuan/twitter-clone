@@ -15,23 +15,30 @@
       </form>
     </div>
     <div class="post-list">
-      <PostList />
+      <PostList :postList="postList" />
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import PostList from "../post/PostList.vue";
 import { useUserStore } from "../../store";
+import { ITweet_User } from "../../types";
+import { getAllTweets } from "../../api";
 
 const userStore = useUserStore();
 
 const postContent = ref("");
+const postList = ref<ITweet_User[]>([]);
 
 function handleSubmit() {
   console.log("submit");
 }
+
+onMounted(async () => {
+  postList.value = await getAllTweets();
+});
 </script>
 
 <style scoped lang="scss">

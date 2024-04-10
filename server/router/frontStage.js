@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../database");
 const jwt = require("jsonwebtoken");
+const { changeToBase64 } = require("../module");
 const { checkPassword, getHashPassword } = require("../methods");
 
 /** 登入 */
@@ -174,6 +175,15 @@ router.patch("/accountInfo", async (req, res) => {
   }
 });
 
+/** 獲取所有推文 */
+router.get("/tweets", async (req, res) => {
+  const query =
+    "SELECT posts.*, users.username, users.account, users.avatarURL FROM posts JOIN users ON posts.UserID = users.id;";
+  db.query(query, (err, result) => {
+    return res.status(200).send(result);
+  });
+});
+
 /** 推文 */
 router.post("/tweet", async (req, res) => {
   const { userID, content } = req.body;
@@ -194,6 +204,21 @@ router.post("/tweet", async (req, res) => {
       });
     }
   );
+});
+
+/** 獲取使用者所有推文 */
+router.get("/selfTweets", async (req, res) => {
+  const { userID } = req.query;
+
+  console.log(userID);
+
+  const query =
+    "SELECT posts.*, users.username, users.account, users.avatarURL FROM posts JOIN users ON posts.UserID = users.id WHERE posts.UserID = ?";
+
+  db.query(query, [userID], (err, result) => {
+    console.log(result);
+    return res.status(200).send([]);
+  });
 });
 
 module.exports = router;
